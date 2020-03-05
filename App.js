@@ -1,61 +1,62 @@
-import  React, {Component} from 'react';
-import { Text, View, ActivityIndicator} from 'react-native';
-import { FlatList} from "native-base";
-import Constants from 'expo-constants';
+import React from 'react';
+import {StyleSheet} from 'react-native'
+import { Container, Header, Content, Card, CardItem, Text, Body, Button,Item, Label, Input, Icon} from "native-base";
+const App: () => React$Node =() => {
+  return (
 
-class Principal extends Component{
-  constructor(props){
-    super(props);
+    <Container>
+        <Header />
+        <Content padder contentContainerStyle = {misEstilos.content}>
+          <Card>
+            <CardItem header bordered>
+              <Text style= {misEstilos.textCenter}>Iniciar  sesión</Text>
+            </CardItem>
+            <CardItem bordered>
+              <Body style = {misEstilos.body}>
+                <Item inlineLabel>
+                <Icon type= 'FontAwesome' name= 'user'></Icon>
+                  <Input placeholder= 'Nombre de usuario'/>
+                </Item>
+                <Item inlineLabel last>
+                <Icon type= 'FontAwesome' name= 'lock'></Icon>
+                  <Input placeholder= 'Contraseña'/>
+                </Item>
+              </Body>
+            </CardItem>
+            <CardItem footer bordered>
+              <Button primary style ={misEstilos.boton}><Text> Ingresar</Text></Button>
+            </CardItem>
+          </Card>
+          <Card>
+          <Button block success>
+            <Text>Registrarse</Text>
+          </Button>
+          </Card>
+        </Content>      
+      </Container>
 
-    this.state = {
-      isLoading : true
-    }
-  }
-
-  async componentDidMount(){
-        try{
-             const response = await fetch('https://reactnative.dev/movies.json');
-             const responseJson = await response.json();
-
-             this.state({
-               isLoading: false,
-               dataSource: responseJson.movies,
-             }, function(){
-
-             });
-             
-        }
-        catch (error){
-          console.log(error);
-        }
+       
 
 
-      } // end component
-
-      render(){
-        if (this.state.isLoading) {
-          return(
-            <View style={{flex:1, padding: 20}}>
-                 <ActivityIndicator />
-            </View>
-
-          );
-        } // end igf
-        return(
-          <View>
-               <FlatList
-                      data = {this.state.dataSource}
-                      renderItem = {({item}) => 
-                        <Text>{item.title}, 
-                        {item.releaseYear}</Text>
-      }
-      KeyExtractor = {({id}, index) => id }
-      />
-    </View>
   );
-  } //end render
+};
 
+const misEstilos = StyleSheet.create({
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  textCenter:{
+    textAlign: 'center',
+    width: '100%',
+  },
+  boton: {
+    marginLeft: '35%',
+  },
+  body: {
+    paddingVertical: 35,
+  }
+  
+});
 
-}// end class
-
-export default Principal;
+export default App;
